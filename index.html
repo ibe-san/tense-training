@@ -12,7 +12,7 @@
 html,body{height:100%;height:100dvh;overflow:hidden;margin:0}
 body{background:linear-gradient(145deg,#0a0a1a 0%,#111128 50%,#0d1b2a 100%);
   font-family:-apple-system,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',sans-serif;
-  color:#fff;padding:0}
+  color:#fff;padding:0;overflow-x:hidden}
 .mono{font-family:'SF Mono','Menlo','Consolas',monospace}
 .screen{display:none;height:100dvh}
 .screen.active{display:flex;flex-direction:column;overflow:hidden}
@@ -23,19 +23,19 @@ body{background:linear-gradient(145deg,#0a0a1a 0%,#111128 50%,#0d1b2a 100%);
 .menu-logo{font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.25);text-transform:uppercase;margin-bottom:3px}
 .menu-title{font-size:22px;font-weight:700;background:linear-gradient(135deg,#E07A5F,#F2CC8F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .menu-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:3px}
-.menu-grid{display:grid;gap:10px}
-.menu-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all 0.15s}
+.menu-grid{display:grid;gap:10px;overflow:hidden}
+.menu-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all 0.15s;overflow:hidden;min-width:0}
 .menu-card:active{transform:scale(0.98);background:rgba(255,255,255,0.06)}
-.mc-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.mc-top{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;min-width:0}
 .mc-num{font-size:11px;font-weight:700;color:#E07A5F;min-width:34px}
-.mc-title{flex:1;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc-title{flex:1;font-size:14px;font-weight:600;line-height:1.4;word-break:break-word}
 .mc-count{font-size:10px;color:rgba(255,255,255,0.3)}
 .mc-progress{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:5px}
 .mc-progress-fill{height:100%;border-radius:2px;background:#52B788;transition:width 0.3s}
 .mc-stats{display:flex;gap:10px;font-size:10px;color:rgba(255,255,255,0.3)}
 .mc-stat-ok{color:rgba(82,183,136,0.7)}
 .mc-stat-ng{color:rgba(239,71,111,0.7)}
-.mc-sections{font-size:10px;color:rgba(255,255,255,0.2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc-sections{font-size:10px;color:rgba(255,255,255,0.2);margin-top:4px;line-height:1.5;word-break:break-word;overflow-wrap:break-word}
 .shuffle-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 8px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);cursor:pointer}
 .shuffle-label{font-size:12px;color:rgba(255,255,255,0.4)}
 .sw{width:36px;height:20px;border-radius:10px;background:rgba(255,255,255,0.1);position:relative;transition:background 0.2s}
@@ -142,6 +142,25 @@ body{background:linear-gradient(145deg,#0a0a1a 0%,#111128 50%,#0d1b2a 100%);
 .jump-cell.done{background:rgba(82,183,136,0.12);border-color:rgba(82,183,136,0.3);color:#52B788}
 .jump-cell.has-wrong{background:rgba(239,71,111,0.12);border-color:rgba(239,71,111,0.3);color:#EF476F}
 .jump-close{margin-top:12px;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;width:100%}
+/* Auto Play Settings */
+.auto-row-menu{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 4px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+.auto-label-menu{font-size:12px;color:rgba(255,255,255,0.4)}
+.auto-settings{display:none;margin:0 0 4px}
+.auto-settings.visible{display:block}
+.auto-time-row{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);margin-bottom:4px}
+.auto-time-label{font-size:11px;color:rgba(255,255,255,0.35);flex:1;text-align:left}
+.auto-time-val{display:flex;align-items:center;gap:6px}
+.auto-time-val button{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.auto-time-val button:active{background:rgba(255,255,255,0.15)}
+.auto-time-val span.sec-display{font-size:13px;color:#F2CC8F;width:20px;text-align:center;font-weight:600}
+.auto-time-val span.sec-unit{font-size:10px;color:rgba(255,255,255,0.2)}
+/* Auto Play Bar */
+.auto-bar{display:none;align-items:center;justify-content:center;gap:14px;padding:8px 16px}
+.auto-bar.visible{display:flex}
+.timer-ring{flex-shrink:0}
+.auto-pause-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);cursor:pointer;color:rgba(255,255,255,0.5);font-size:11px}
+.auto-pause-btn:active{background:rgba(255,255,255,0.12)}
+.auto-status{font-size:11px;color:rgba(255,255,255,0.3)}
 
 /* Result */
 .result-overlay{z-index:50;background:rgba(10,10,26,0.95)}
@@ -179,6 +198,20 @@ body{background:linear-gradient(145deg,#0a0a1a 0%,#111128 50%,#0d1b2a 100%);
   <div class="shuffle-row" onclick="toggleShuffle()">
     <span class="shuffle-label">シャッフル</span>
     <div class="sw" id="sw-shuffle"></div>
+  </div>
+  <div class="auto-row-menu" onclick="toggleAutoMode()">
+    <span class="auto-label-menu">Auto Play</span>
+    <div class="sw" id="sw-auto"></div>
+  </div>
+  <div class="auto-settings" id="auto-settings">
+    <div class="auto-time-row">
+      <div class="auto-time-label">表面の表示時間</div>
+      <div class="auto-time-val"><button onclick="event.stopPropagation();adjTime('front',-1)">−</button><span class="sec-display" id="auto-front-sec">3</span><button onclick="event.stopPropagation();adjTime('front',1)">+</button><span class="sec-unit">秒</span></div>
+    </div>
+    <div class="auto-time-row">
+      <div class="auto-time-label">裏面の表示時間</div>
+      <div class="auto-time-val"><button onclick="event.stopPropagation();adjTime('back',-1)">−</button><span class="sec-display" id="auto-back-sec">3</span><button onclick="event.stopPropagation();adjTime('back',1)">+</button><span class="sec-unit">秒</span></div>
+    </div>
   </div>
 </div>
 </div>
@@ -241,7 +274,21 @@ body{background:linear-gradient(145deg,#0a0a1a 0%,#111128 50%,#0d1b2a 100%);
       </div>
     </div>
   </div>
-  <div class="controls">
+  <div class="auto-bar" id="auto-bar">
+    <div class="timer-ring">
+      <svg width="38" height="38" viewBox="0 0 38 38">
+        <circle cx="19" cy="19" r="17" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2.5"/>
+        <circle cx="19" cy="19" r="17" fill="none" stroke="#E07A5F" stroke-width="2.5" stroke-linecap="round" id="ring-fg" stroke-dasharray="106.81" stroke-dashoffset="0"/>
+        <text x="19" y="19" text-anchor="middle" dominant-baseline="central" fill="#fff" font-size="11" font-weight="600" id="timer-text">3</text>
+      </svg>
+    </div>
+    <button class="auto-pause-btn" onclick="toggleAutoPause()">
+      <span id="pause-icon">⏸</span><span id="play-icon" style="display:none">▶</span>
+      <span id="pause-label">一時停止</span>
+    </button>
+    <span class="auto-status" id="auto-status">Auto Play 再生中...</span>
+  </div>
+  <div class="controls" id="manual-controls">
     <div class="nav-row">
       <button class="nav-btn" id="btn-prev" onclick="goPrev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
       <button class="judge-btn wrong" id="btn-wrong" onclick="judge(false)">✕</button>
@@ -298,6 +345,7 @@ var shuffle=false,curExIdx=-1,curEx=null;
 var items=[],idx=0,revealed=false,cOk=0,cNg=0;
 var qStatus=[],sessionWrong=[];
 var pendingSecSel=null;
+var autoMode=false,autoFrontSec=3,autoBackSec=3,autoTimerId=null,autoCountdownId=null,autoPaused=false;
 
 // ===== SPEECH =====
 var cEn=null,cJa=null;
@@ -327,7 +375,14 @@ function buildMenu(){
     var okC=0,ngC=0;
     for(var k in hist){if(hist[k]==='ok')okC++;else ngC++}
     var done=okC+ngC,pct=ex.total>0?Math.round(done/ex.total*100):0;
-    var secN=ex.sections.length>1?ex.sections.map(function(s){return s.title}).join(', '):'';
+    var secN='';
+    if(ex.sections.length>1){
+      var titles=ex.sections.map(function(s){return s.title});
+      var m=titles[0].match(/^(.+?)（/);
+      if(m&&titles.every(function(t){return t.indexOf(m[1]+'（')===0})){
+        secN=titles.map(function(t){var p=t.match(/（(.+?)）/);return p?p[1]:t}).join(' / ');
+      }else{secN=titles.join(', ');}
+    }
     var tName=ex.title||( ex.sections.length===1?ex.sections[0].title:ex.sections[0].title.split('（')[0]);
     h+='<div class="menu-card" onclick="selectEx('+i+')">';
     h+='<div class="mc-top"><span class="mc-num mono">'+ex.id+'</span><span class="mc-title">'+tName+'</span><span class="mc-count mono">'+ex.total+'問</span></div>';
@@ -344,6 +399,8 @@ function buildMenu(){
   $('menu-sub').textContent=DB.length+' Exercises \u00B7 '+total+' Items';
 }
 function toggleShuffle(){shuffle=!shuffle;$('sw-shuffle').className=shuffle?'sw on':'sw'}
+function toggleAutoMode(){autoMode=!autoMode;$('sw-auto').className=autoMode?'sw on':'sw';$('auto-settings').classList.toggle('visible',autoMode)}
+function adjTime(side,d){if(side==='front'){autoFrontSec=Math.max(1,Math.min(15,autoFrontSec+d));$('auto-front-sec').textContent=autoFrontSec}else{autoBackSec=Math.max(1,Math.min(15,autoBackSec+d));$('auto-back-sec').textContent=autoBackSec}}
 
 function selectEx(i){curExIdx=i;curEx=DB[i];if(curEx.sections.length>1)openSec();else openMode(null)}
 
@@ -381,6 +438,7 @@ function openMode(secSelArr){
   b+='<button class="mode-btn start" onclick="startMode(\'start\')"><span class="icon">▶</span><div class="info"><div>最初から</div><div class="info-sub">全問チャレンジ</div></div></button>';
   b+='<button class="mode-btn resume" onclick="startMode(\'resume\')"'+(done===0?' disabled':'')+' ><span class="icon">↻</span><div class="info"><div>続きから</div><div class="info-sub">'+(done>0?'問'+(li+1)+'から再開（'+done+'/'+curEx.total+'済）':'データなし')+'</div></div></button>';
   b+='<button class="mode-btn retry" onclick="startMode(\'retry\')"'+(ngC===0?' disabled':'')+' ><span class="icon">❌</span><div class="info"><div>❌だけ復習</div><div class="info-sub">'+(ngC>0?ngC+'問':'間違いなし')+'</div></div></button>';
+  if(autoMode){b+='<button class="mode-btn start" onclick="startMode(\'auto\')" style="background:rgba(242,204,143,0.15);color:#F2CC8F;border-color:rgba(242,204,143,0.3)"><span class="icon">▶</span><div class="info"><div>Auto Play</div><div class="info-sub">自動再生（'+autoFrontSec+'秒/'+autoBackSec+'秒）</div></div></button>';}
   b+='<button class="mode-btn reset" onclick="confirmReset()"><span class="icon">🗑</span><div class="info"><div>履歴リセット</div></div></button>';
   b+='<button class="mode-btn mcancel" onclick="closeMode()"><span class="icon">←</span><div class="info"><div>戻る</div></div></button>';
   $('mode-body').innerHTML=b;$('ov-mode').classList.add('visible');
@@ -397,7 +455,8 @@ function closeConfirm(){$('ov-confirm').classList.remove('visible')}
 
 // ===== START PRACTICE =====
 function startMode(mode){
-  closeMode();
+  closeMode();stopAuto();
+  var isAuto=(mode==='auto');
   items=[];
   var secs=curEx.sections;
   for(var si=0;si<secs.length;si++){
@@ -435,8 +494,13 @@ function startMode(mode){
   }
 
   var tName=curEx.sections.length===1?curEx.sections[0].title:curEx.sections[0].title.split('（')[0];
-  $('hdr-title').innerHTML='<b>'+curEx.id+'</b> '+tName;
+  $('hdr-title').innerHTML='<b>'+curEx.id+'</b> '+(isAuto?'▶ Auto Play':tName);
+  $('auto-bar').classList.toggle('visible',isAuto);
+  $('manual-controls').style.display=isAuto?'none':'';
+  autoPaused=false;
+  if(isAuto){$('pause-icon').style.display='';$('play-icon').style.display='none';$('pause-label').textContent='一時停止';$('auto-status').textContent='Auto Play 再生中...';}
   showScreen('scr-practice');showCard();
+  if(isAuto)startAutoStep();
 }
 
 // ===== PRACTICE UI =====
@@ -490,7 +554,7 @@ function goPrev(){if(idx>0){idx--;showCard('prev')}}
 function goNext(){if(idx+1<items.length){idx++;showCard('next')}}
 
 function backToMenu(){
-  speechSynthesis.cancel();
+  speechSynthesis.cancel();stopAuto();
   $('ov-result').classList.remove('visible');
   buildMenu();showScreen('scr-menu');
 }
@@ -530,6 +594,74 @@ function retryWrongFromResult(){
   qStatus=[];for(var i=0;i<items.length;i++)qStatus.push('pending');
   if(shuffle){for(var i=items.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=items[i];items[i]=items[j];items[j]=t}}
   showCard();
+}
+
+// ===== AUTO PLAY =====
+function startAutoStep(){
+  stopAutoTimers();
+  if(autoPaused)return;
+  speak(items[idx].ja,'ja');
+  var sec=autoFrontSec;
+  updateRing(sec,sec);
+  $('timer-text').textContent=sec;
+  autoCountdownId=setInterval(function(){
+    sec--;
+    if(sec<=0){
+      clearInterval(autoCountdownId);autoCountdownId=null;
+      revealAnswer();
+      var sec2=autoBackSec;
+      updateRing(sec2,sec2);
+      $('timer-text').textContent=sec2;
+      autoCountdownId=setInterval(function(){
+        sec2--;
+        if(sec2<=0){
+          clearInterval(autoCountdownId);autoCountdownId=null;
+          autoAdvance();
+        }else{
+          updateRing(sec2,autoBackSec);
+          $('timer-text').textContent=sec2;
+        }
+      },1000);
+    }else{
+      updateRing(sec,autoFrontSec);
+      $('timer-text').textContent=sec;
+    }
+  },1000);
+}
+function updateRing(remain,total){
+  var circ=106.81;
+  var offset=circ*(1-remain/total);
+  $('ring-fg').setAttribute('stroke-dashoffset',offset);
+}
+function autoAdvance(){
+  if(idx+1>=items.length){
+    cOk+=items.length;showResult();stopAuto();return;
+  }
+  idx++;showCard('next');startAutoStep();
+}
+function stopAutoTimers(){
+  if(autoTimerId){clearTimeout(autoTimerId);autoTimerId=null;}
+  if(autoCountdownId){clearInterval(autoCountdownId);autoCountdownId=null;}
+}
+function stopAuto(){
+  stopAutoTimers();autoPaused=false;
+  $('auto-bar').classList.remove('visible');
+  $('manual-controls').style.display='';
+}
+function toggleAutoPause(){
+  if(autoPaused){
+    autoPaused=false;
+    $('pause-icon').style.display='';$('play-icon').style.display='none';
+    $('pause-label').textContent='一時停止';
+    $('auto-status').textContent='Auto Play 再生中...';
+    startAutoStep();
+  }else{
+    autoPaused=true;
+    stopAutoTimers();speechSynthesis.cancel();
+    $('pause-icon').style.display='none';$('play-icon').style.display='';
+    $('pause-label').textContent='再開';
+    $('auto-status').textContent='一時停止中';
+  }
 }
 
 // ===== KEYS =====
